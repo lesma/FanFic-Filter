@@ -1,0 +1,27 @@
+{
+   "background": {
+      "scripts": [ "bg.js" ]
+   },
+   "content_scripts": [ {
+      "css": [ "ff_filter.css" ],
+      "js": [ "ff_filter.js" ],
+      "matches": [ "*://*.fanfiction.net/*", "*://*.fictionpress.com/*" ],
+      "run_at": "document_end"
+   } ],
+  
+   "description": "FanFic Filter provides a way to more efficiently filter stories on FanFiction.Net.",
+   "icons": {
+      "128": "icon_128.png",
+      "48": "icon_48.png"
+   },
+   "manifest_version": 2,
+   "name": "FanFic-Filter",
+   "homepage_url": "https://github.com/lesma/FanFic-Filter",
+   "page_action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.html",
+      "default_title": "FF Filter"
+   },
+   "permissions": [ "storage", "activeTab", "*://*.fanfiction.net/*", "*://*.fictionpress.com/*" ],
+   "version": "1.0.0.0"
+}

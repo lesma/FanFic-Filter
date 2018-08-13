@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			#gear {
+				width: 16px;
+				height: 16px;
+				margin-top: 5px;
+				margin-left: 7px;
+				cursor: pointer;
+			}
+			
+			#gear:hover {
+				-webkit-animation: spin 1s infinite linear;
+			}
+			
+			@-webkit-keyframes spin {
+				100% { -webkit-transform: rotate(360deg); }
+			}
+			
+			#set {
+				-webkit-user-select: none;
+				cursor: pointer;
+				font-size: 14px;
+				padding-left: 5px;
+				position: absolute;
+				top: 11px;
+				left: 35px;
+				overflow: hidden;
+				display: inline-block;
+				font-weight: 900;
+				font-variant: small-caps;
+				font-family: "Palatino Linotype", Palatino, Palladio, "URW Palladio L", "Book Antiqua", Baskerville, "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", Garamond, "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", Georgia, serif;
+			}
+
+			.show_set {
+				width: 125px;
+				background: rgba(102, 153, 204, 0.5);
+				border-top-right-radius: 17px;
+				border-bottom-right-radius: 17px;
+			}
+			
+			#config {
+				display: none;
+				font-size: 15px;
+				font-weight: 300;
+				font-variant: small-caps;
+				font-family: "Palatino Linotype", Palatino, Palladio, "URW Palladio L", "Book Antiqua", Baskerville, "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", Garamond, "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", Georgia, serif;
+			}
+			
+			.set_font {
+				font-weight: 900;
+				font-variant: small-caps;
+				font-family: "Palatino Linotype", Palatino, Palladio, "URW Palladio L", "Book Antiqua", Baskerville, "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", Garamond, "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", Georgia, serif;
+			}
+			
+			.setting_item {
+				margin: 1px 0px 1px 0px;
+				height: 20px;
+				line-height: 20px;
+			}
+			
+			#deftag {
+				height: 40px;
+			}
+			
+			#base {
+				width: 250px;
+				overflow-x: none;
+			}
+			
+			.title {
+				text-align: center;
+				font-variant: small-caps;
+				font-size: 20px;
+				font-weight: 900;
+				font-family: "Palatino Linotype", Palatino, Palladio, "URW Palladio L", "Book Antiqua", Baskerville, "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", Garamond, "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", Georgia, serif;
+				-webkit-user-select: none;
+				cursor: context-menu;
+			}
+			
+			.add {
+				background: rgba(102, 153, 204, 0.5);
+				-webkit-user-select: none;
+				border-radius: 5px;
+				text-align: center;
+				width: 130px;
+				height: 20px;
+				line-height: 20px;
+				color: #000000;
+				font-weight: 900;
+				font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+				font-size: 14px;
+				cursor: context-menu;
+			}
+			
+			.add:hover {
+				background: rgba(51, 102, 153, 0.5);
+				width: 140px;
+				color: #ffffff;
+			}
+			
+			.crit_holder {
+				height: 30px;
+				border-radius: 7px;
+				background: rgba(204, 204, 255, 0.2);
+				margin: 0px 0px 1px 0px;
+				overflow: hidden;
+			}
+			
+			#tag_enter {
+				width: 240px;
+				height: 22px;
+				position: relative;
+				left: 5px;
+				overflow: hidden;
+				border: 1px solid black;
+				border-radius: 5px;
+				margin: 3px 0px 2px 0px;
+				color: rgba(100, 100, 100, 0.8);
+				font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+				font-variant: small-caps;
+				font-size: 18px;
+				font-weight: 700;
+				text-align: center;
+			}
+			
+			#tag_enter:focus {
+				font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+				font-size: 18px;
+				font-weight: normal;
+				font-variant: normal;
+				color: black;
+			}
+			
+			.value_box {
+				width: 106px;
+				height: 24px;
+				left: 2px;
+				top: 3px;
+				text-align: center;
+				line-height: 24px;
+				font: 'courier new';
+				overflow: hidden;
+				border: solid 1px black;
+			}
+			
+			.op_select {
+				width: 36px;
+				height: 24px;
+				left: 112px;
+				top: 3px;
+			}
+			
+			.check_box {
+				width: 78px;
+				height: 24px;
+				right: 20px;
+				top: 3px;
+				text-align: center;
+				line-height: 24px;
+				font: 'courier new';
+				overflow: hidden;
+				border: solid 1px black;
+			}
+			
+			.tag {
+				background: rgba(255, 51, 51, 0.3);
+				border-radius: 7px;
+				position: relative;
+				margin: 2px 1px 2px 1px;
+				line-height: 25px;
+				font: 700 18px 'courier new', monospace;
+				-webkit-user-select: none;
+				cursor: context-menu;
+			}
+			
+			.tag_pos {
+				background: rgba(51, 255, 51, 0.3);
+				border-radius: 7px;
+				position: relative;
+				margin: 2px 1px 2px 1px;
+				line-height: 25px;
+				font: 700 18px 'courier new', monospace;
+				-webkit-user-select: none;
+				cursor: context-menu;
+			}
+			
+			.tag_text {
+				position: relative;
+				left: 5px;
+			}
+			
+			.close {
+				width: 16px;
+				height: 16px;
+				background: url('close.png');
+				background-size: contain;
+			}
+			
+			.close:hover {
+				background: url('close_hover.png');
+				background-size: contain;
+			}
+			
+			#show_ins {
+				font-weight: 100;
+				font-size: 14px;
+				font-variant: small-caps;
+				font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
+				-webkit-user-select: none;
+				cursor: pointer;
+			}
+			
+			#inst_box {
+				width: 235px;
+				margin: 3px 3px 3px 3px;
+				border: solid 1px black;
+				padding: 0px 2px 5px 5px;
+				position: relative;
+				display: none;
+				-webkit-user-select: none;
+			}
+			
+			.ins {
+				font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+			}
+			
+			#var_box {
+				width: 200px;
+				margin: 0 auto;
+				font-family: "Courier Bold", Courier, Georgia, Times, "Times New Roman", monospace;
+				background: #e4e4e4;
+				border-radius: 10px;
+			}
+			
+			#exadd {
+				background: rgba(102, 153, 204, 0.5);
+				-webkit-user-select: none;
+				border-radius: 5px;
+				text-align: center;
+				width: 130px;
+				height: 20px;
+				line-height: 20px;
+				color: #000000;
+				font-weight: 900;
+				font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+				font-size: 14px;
+				cursor: context-menu;
+			}
+			
+			#txtbox {
+				width: 85px;
+				height: 22px;
+				border: 1px solid black;
+				border-radius: 5px;
+				padding: 1px 2px 1px 2px;
+				font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+				font-size: 16px;
+				text-align: center;
+			}
+			
+			.var {
+				font-weight: 900;
+				font-size: 20px;
+				font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+				color: #1e13ff;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="base">
+			<div style="display:inline-block;"><img id="gear" src="settings.png" /><span id="set">Settings</span></div>
+			<div id="config">
+				<div style="margin: 2px 0px 2px 0px; background: #303030; height: 1px;"></div>
+				<div class="setting_item" id="dis">disable: <input id="disBox" type="checkbox" value="false" /></div>
+				<div class="setting_item" id="img">show story images: <input id="imgBox" type="checkbox" value="false" /></div>
+				<div class="setting_item" id="deftag">
+					default tags: <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="defTag" id="neg" type="radio" value="0" checked="true">negative</input>
+					<input name="defTag" id="pos" type="radio" value="1">positive</input>
+				</div>
+			</div>
+			<div style="margin: 6px 0px 2px 0px; background: #303030; height: 1px;"></div>
+			<div id="crit">
+				<div class="title">Criteria Filters</div>
+				<div style="margin: 3px 0px 5px 0px; background: #303030; height: 1px;"></div>
+				<div id="holder"></div>
+				<div class="add" id="c_add">[ Add Filter ]</div>
+			</div>
+			<div style="margin: 6px 0px 2px 0px; background: #303030; height: 1px;"></div>
+			<div id="sums">
+				<div class="title">Summary Filters</div>
+				<div style="margin: 3px 0px 5px 0px; background: #303030; height: 1px;"></div>
+				<div id="tags"></div>
+				<input id="tag_enter" type="text" value="Enter Filter Tag"></input>
+			</div>
+			<div style="margin: 5px 0px 5px 0px; background: #303030; height: 3px;"></div>
+			<div id="show_ins">[Show Instructions]</div>
+			<div id="inst_box">
+				<div class="ins">
+					<p>
+						Use <span id="exadd">[ Add Filter ]</span> to add filter criterion.
+					</p>
+					<p>
+						Type in a particular criterion in the first box and a number to check against in the last box.
+					</p>
+					<p>
+						A criterion can be of the form <span class="var">&lt;var&gt;</span> or <span class="var">&lt;var&gt;/&lt;var&gt;</span>.
+					</p>
+					<p>
+						<span class="var">&lt;var&gt;</span> can be any of the below.
+					</p>
+				</div>
+				<div id="var_box">
+					<div>&nbsp;<span class="var">chaps</span><span style="position:relative; left:52px;">Chapters</span></div>
+					<div>&nbsp;<span class="var">words</span><span style="position:relative; left:50px;">Words</span></div>
+					<div>&nbsp;<span class="var">revs</span><span style="position:relative; left:65px;">Reviews</div>
+					<div>&nbsp;<span class="var">favs</span><span style="position:relative; left:65px;">Favs</span></div>
+					<div>&nbsp;<span class="var">folls</span><span style="position:relative; left:63px;">Follows</span></div>
+				</div>
+				<div class="ins">
+					<p>
+						Use the <span id="txtbox">Tag Box</span> to add summary filter tags.
+					</p>
+					<p>
+						Type in a tag to filter the summary and press <kbd>Enter</kbd>. 
+					</p>
+					<p>
+						Use <strong>/</strong> for pairings. For example, <span class="tag">Naru/Sasu</span>
+						will check for 
+						<ul>
+							<li><span class="tag">&nbsp;NaruSasu&nbsp;</span></li> 
+							<li><span class="tag">&nbsp;Naru Sasu&nbsp;</span></li>
+							<li><span class="tag">&nbsp;Naru/Sasu&nbsp;</span></li>
+							<li><span class="tag">&nbsp;NaruXSasu&nbsp;</span></li>
+							<li><span class="tag">&nbsp;Naru!Sasu&nbsp;</span></li>
+							<li><span class="tag">&nbsp;Naru-Sasu&nbsp;</span></li>
+							<li><span class="tag">&nbsp;SasuNaru&nbsp;</span></li>
+							<li><span class="tag">&nbsp;Sasu Naru&nbsp;</span></li>
+							<li><span class="tag">&nbsp;Sasu/Naru&nbsp;</span></li>
+							<li><span class="tag">&nbsp;SasuXNaru&nbsp;</span></li>
+							<li><span class="tag">&nbsp;Sasu!Naru&nbsp;</span></li>
+							<li><span class="tag">&nbsp;Sasu-Naru&nbsp;</span></li>
+						</ul>
+					</p>
+					<p>Filter tags can be <span class="tag_pos">&nbsp;positive&nbsp;</span> or <span class="tag">&nbsp;negative&nbsp;</span>.</p>
+					<p><span class="tag">&nbsp;Negative&nbsp;</span> filter tags will be excluded from filtered stories.</p>
+					<p><span class="tag_pos">&nbsp;Positive&nbsp;</span> filter tags will be always included in filtered stories, and stories not containing them will be filtered out.</p>	
+					<p>
+						Use <span class="set_font"><img style="width:16px; height:16px; margin-top: 5px;" src="settings.png" />Settings</span> to change add-on configuration.
+					</p>
+					<p>&nbsp;&nbsp;<span class="set_font">disable</span> to disable/enable filter functions.</p>
+					<p>&nbsp;&nbsp;<span class="set_font">show story images</span> to show/hide images next to stories. Showing images might make things a bit slower!</p>
+					<p>&nbsp;&nbsp;<span class="set_font">default tags</span> to select the default filter tag.</p>
+					<p>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If <span class="set_font">negative</span> is default, use <strong>+</strong> 
+						before tag for <span class="tag_pos">&nbsp;positive&nbsp;</span> tag. 
+						Example, <span style="font-family: Rockwell, 'Courier Bold', Courier, Georgia, Times, 'Times New Roman', serif;font-size: 18px;">+positive</span>
+						for <span class="tag_pos">&nbsp;positive&nbsp;</span>.<br />
+					</p>
+					<p>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If <span class="set_font">positive</span> is default, use <strong>-</strong> 
+						before tag for <span class="tag">&nbsp;negative&nbsp;</span> tag. 
+						Example, <span style="font-family: Rockwell, 'Courier Bold', Courier, Georgia, Times, 'Times New Roman', serif;font-size: 18px;">-negative</span> 
+						for <span class="tag">&nbsp;negative&nbsp;</span>.
+					</p>				
+				</div>
+			</div>
+		</div>
+		<script src="popup.js"></script>
+	</body>
+</html>
